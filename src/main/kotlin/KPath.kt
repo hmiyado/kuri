@@ -10,10 +10,10 @@ class KPath(
         }
     )
 
-    operator fun div(subPathString: String): KPath = create(this, create(subPathString))
+    operator fun div(subPathString: String): KPath = Factory.create(this, Factory.create(subPathString))
 
     operator fun div(builder: KNodeBuilder.() -> Unit): KNode {
-        return KNodeBuilder(create(this, subPath)).apply(builder).build()
+        return KNodeBuilder(Factory.create(this, subPath)).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -41,7 +41,7 @@ class KPath(
             val splittedPaths = string.split("/")
             this.string = splittedPaths[0]
             if (splittedPaths.size > 1) {
-                val middlePath = create(splittedPaths.drop(1).joinToString("/"))
+                val middlePath = Factory.create(splittedPaths.drop(1).joinToString("/"))
                 this.subPath = subPath?.div(middlePath) ?: middlePath
             }
         }
@@ -49,7 +49,7 @@ class KPath(
         fun build() = KPath(KSegment.Constant(this.string), this.subPath)
     }
 
-    companion object {
+    object Factory {
         fun create(string: String, subPath: KPath? = null): KPath = Builder(string, subPath).build()
 
         fun create(kPath: KPath, subPath: KPath? = null): KPath {
@@ -63,6 +63,9 @@ class KPath(
             )
         }
 
-        operator fun String.div(subPath: String): KPath = create(this) / subPath
+    }
+
+    companion object {
+        operator fun String.div(subPath: String): KPath = Factory.create(this) / subPath
     }
 }

@@ -1,10 +1,10 @@
 class KNodeBuilder(
-    var kPath: KPath = KPath.create(""),
+    var kPath: KPath = KPath.Factory.create(""),
     var subPaths: Set<KNode> = emptySet()
 ) {
 
     operator fun String.unaryPlus() {
-        subPaths += KNode(KPath.create(this))
+        subPaths += KNode(KPath.Factory.create(this))
     }
 
     fun build(): KNode = KNode(kPath, subPaths)
