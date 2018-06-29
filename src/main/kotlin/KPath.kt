@@ -12,8 +12,8 @@ class KPath(
 
     operator fun div(subPathString: String): KPath = Factory.create(this, Factory.create(subPathString))
 
-    operator fun div(builder: KNodeBuilder.() -> Unit): KNode {
-        return KNodeBuilder(Factory.create(this, subPath)).apply(builder).build()
+    operator fun div(builder: KNode.Builder.() -> Unit): KNode {
+        return KNode.Builder(Factory.create(this, subPath)).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -75,8 +75,8 @@ class KPath(
     companion object {
         operator fun String.div(subPath: String): KPath = Factory.create(this) / subPath
 
-        operator fun String.div(builder: KNodeBuilder.() -> Unit): KNode {
-            return KNodeBuilder(Factory.create(this)).apply(builder).build()
+        operator fun String.div(builder: KNode.Builder.() -> Unit): KNode {
+            return KNode.Builder(Factory.create(this)).apply(builder).build()
         }
     }
 }
