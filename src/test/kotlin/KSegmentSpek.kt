@@ -24,4 +24,14 @@ object KSegmentSpek : Spek({
             KSegment.Variable<Int>("number").assign(3) shouldBe KSegment.Constant(3.toString())
         }
     }
+
+    describe("Factory") {
+        it("Constant を作成する") {
+            KSegment.Factory.create("constant") shouldBe KSegment.Constant("constant")
+        }
+
+        it("Variable を作成する") {
+            KSegment.Factory.create("{variable}") shouldBe KSegment.Variable<Any>("variable")
+        }
+    }
 })
