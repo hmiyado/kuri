@@ -29,5 +29,10 @@ object KPathSpec : Spek({
                 +"child2"
             } shouldBe KNode("root", setOf(KNode("child1"), KNode("child2")))
         }
+
+        it("subpath を連結できる") {
+            val path = "root/sub1/sub2/sub3"
+            KPath(path).joinSubPaths() shouldBe path
+        }
     }
 })

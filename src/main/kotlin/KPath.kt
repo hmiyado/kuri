@@ -29,6 +29,10 @@ class KPath(string: String, subPath: KPath? = null) {
         return KNodeBuilder(KPath(string, subPath)).apply(builder).build()
     }
 
+    fun joinSubPaths(): String = this.string + (subPath?.let {
+        "/" + it.joinSubPaths()
+    } ?: "")
+
     override fun equals(other: Any?): Boolean {
         val kpath = other as? KPath ?: return false
         if (this.string != kpath.string) return false
