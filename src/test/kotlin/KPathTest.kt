@@ -5,6 +5,12 @@ import org.jetbrains.spek.api.dsl.it
 
 object KPathSpec : Spek({
     describe("kpath") {
+        it("String をスラッシュ区切りのパスにできる") {
+            with(KPath) {
+                "root" / "sub1" / "sub2" shouldBe create("root/sub1/sub2")
+            }
+        }
+
         it("渡された文字列が/区切りのパスだったら，subpathに分割する") {
             KPath.create("root/sub1/sub2/sub3") shouldBe KPath.create(
                 "root",

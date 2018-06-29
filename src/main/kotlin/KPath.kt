@@ -62,5 +62,7 @@ class KPath(
                 }
             )
         }
+
+        operator fun String.div(subPath: String): KPath = create(this) / subPath
     }
 }
