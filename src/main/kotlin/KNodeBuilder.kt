@@ -21,15 +21,17 @@ class KNodeBuilder(
         return KPathHolder(kPath / string)
     }
 
-//    operator fun KPathHolder.div(builder: KNodeBuilder.() -> Unit) {
-//        subNodes = subNodes.map {
-//            if (this.kPath == it.kpath) {
-//                KNodeBuilder().apply(builder).build()
-//            } else {
-//                it
-//            }
-//        }.toSet()
-//    }
+    operator fun KPathHolder.div(builder: KNodeBuilder.() -> Unit) {
+        subNodes = subNodes.map {
+            if (this.kPath == it.kpath) {
+                KNodeBuilder().apply(builder).apply {
+                    kPath = this@div.kPath
+                }.build()
+            } else {
+                it
+            }
+        }.toSet()
+    }
 
     operator fun KPath.unaryMinus() {
         subNodes = subNodes.plus(KNode(this))
