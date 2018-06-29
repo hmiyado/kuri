@@ -1,6 +1,6 @@
 class KPath(
-    protected val segment: KSegment,
-    protected val subPath: KPath? = null
+    private val segment: KSegment,
+    private val subPath: KPath? = null
 ) {
 
     operator fun div(other: KPath): KPath = KPath(
