@@ -1,6 +1,6 @@
 class KNode(
-    internal val kpath: KPath,
-    internal val subNodes: Set<KNode> = emptySet()
+    private val kpath: KPath,
+    private val subNodes: Set<KNode> = emptySet()
 ) {
     constructor(path: String, subNodes: Set<KNode> = emptySet()) : this(KPath.Factory.create(path), subNodes)
 
