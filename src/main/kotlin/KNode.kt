@@ -2,7 +2,7 @@ class KNode(
     private val kpath: KPath,
     private val subNodes: Set<KNode> = emptySet()
 ) {
-    constructor(path: String, subNodes: Set<KNode> = emptySet()) : this(KPath(path), subNodes)
+    constructor(path: String, subNodes: Set<KNode> = emptySet()) : this(KPath.create(path), subNodes)
 
 
     override fun equals(other: Any?): Boolean {
