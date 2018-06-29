@@ -17,13 +17,21 @@ class KPath(
     }
 
     override fun equals(other: Any?): Boolean {
-        val kpath = other as? KPath ?: return false
-        if (this.subPath == null && kpath.subPath == null) return true
-        return this.subPath == kpath.subPath
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as KPath
+
+        if (segment != other.segment) return false
+        if (subPath != other.subPath) return false
+
+        return true
     }
 
     override fun hashCode(): Int {
-        return (subPath?.hashCode() ?: 0)
+        var result = segment.hashCode()
+        result = 31 * result + (subPath?.hashCode() ?: 0)
+        return result
     }
 
     override fun toString(): String {
@@ -31,7 +39,6 @@ class KPath(
             "/" + it.toString()
         } ?: "")
     }
-
 
     internal class Builder(
         var string: String = "",

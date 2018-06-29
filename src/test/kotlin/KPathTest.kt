@@ -39,8 +39,8 @@ object KPathSpec : Spek({
 
         it("should be node when branches paths") {
             create("root") / {
-                +"child1"
-                +"child2"
+                -"child1"
+                -"child2"
             } shouldBe KNode("root", setOf(KNode("child1"), KNode("child2")))
         }
 
