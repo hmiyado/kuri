@@ -6,12 +6,14 @@ import org.jetbrains.spek.api.dsl.it
 object KNodeSpek : Spek({
     describe("KNode") {
         it("KPath のセットに展開できる") {
-            val actual = KPath.Factory.create("root") / {
-                -"sub1"
-                -"sub2" / "sub2-1"
-                -"sub3" / {
-                    -"sub3-1"
-                    -"sub3-2" / "sub3-2-1"
+            val actual = with(KPath) {
+                "root" / {
+                    -"sub1"
+                    -"sub2" / "sub2-1"
+                    -"sub3" / {
+                        -"sub3-1"
+                        -"sub3-2" / "sub3-2-1"
+                    }
                 }
             }
 

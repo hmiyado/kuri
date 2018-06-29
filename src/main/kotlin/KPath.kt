@@ -74,5 +74,9 @@ class KPath(
 
     companion object {
         operator fun String.div(subPath: String): KPath = Factory.create(this) / subPath
+
+        operator fun String.div(builder: KNodeBuilder.() -> Unit): KNode {
+            return KNodeBuilder(Factory.create(this)).apply(builder).build()
+        }
     }
 }
