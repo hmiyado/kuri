@@ -31,4 +31,24 @@ sealed class KSegment {
             }
         }
     }
+
+    class Variable<T>(private val id: String) : KSegment() {
+        init {
+            assert(valid(id))
+        }
+
+        fun assign(value: T) = Constant(value.toString())
+
+        override fun toString(): String {
+            return "{:$id}"
+        }
+
+        companion object {
+            fun valid(id: String): Boolean {
+                return id.all {
+                    it !in setOf('{', '}', ':', '/')
+                }
+            }
+        }
+    }
 }
