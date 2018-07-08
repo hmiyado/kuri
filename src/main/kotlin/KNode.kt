@@ -4,6 +4,25 @@ class KNode(
 ) {
     constructor(path: String, subNodes: Set<KNode> = emptySet()) : this(KPath.Factory.create(path), subNodes)
 
+    fun findKPathByTag(tag: String): KPath? {
+        this.kpath.findKPathByTag(tag)?.let {
+            return it
+        }
+
+        return when {
+            subNodes.isNotEmpty() -> {
+                for (node in subNodes) {
+                    val found = node.findKPathByTag(tag)
+                    if (found != null) {
+                        return kpath / found
+                    }
+                }
+                null
+            }
+            else -> null
+        }
+    }
+
     fun toPaths(): Set<KPath> {
         if (subNodes.isEmpty()) {
             return setOf(kpath)
@@ -49,14 +68,18 @@ class KNode(
             }
 
         operator fun KPathHolder.div(string: String): KPathHolder {
+            return this / KPath.Factory.create(string)
+        }
+
+        operator fun KPathHolder.div(kPath: KPath): KPathHolder {
             subNodes = subNodes.map {
                 if (this.kPath == it.kpath) {
-                    KNode(it.kpath / string, it.subNodes)
+                    KNode(it.kpath / kPath, it.subNodes)
                 } else {
                     it
                 }
             }.toSet()
-            return KPathHolder(kPath / string)
+            return KPathHolder(this.kPath / kPath)
         }
 
         operator fun KPathHolder.div(builder: Builder.() -> Unit) {

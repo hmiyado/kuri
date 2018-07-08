@@ -1,14 +1,25 @@
 class KPath(
     private val segment: KSegment,
     private val subPath: KPath? = null,
-    private val tag: String = ""
+    val tag: String = ""
 ) {
+
+    fun findKPathByTag(tag: String): KPath? {
+        if (this.tag == tag) {
+            return KPath(segment, null, tag)
+        }
+
+        return subPath?.findKPathByTag(tag)?.let {
+            KPath(segment, it, tag)
+        }
+    }
 
     operator fun div(other: KPath): KPath = KPath(
         segment, when {
             subPath != null -> subPath / other
             else -> other
-        }
+        },
+        tag
     )
 
     operator fun div(subPathString: String): KPath = Factory.create(this, Factory.create(subPathString))
@@ -55,7 +66,7 @@ class KPath(
             }
         }
 
-        fun build() = KPath(KSegment.Constant(this.string), this.subPath)
+        fun build() = KPath(KSegment.Constant(this.string), this.subPath, tag)
     }
 
     object Factory {
@@ -69,7 +80,8 @@ class KPath(
                     kPath.subPath != null && subPath != null -> kPath.subPath / subPath
                     kPath.subPath == null && subPath != null -> subPath
                     else -> null
-                }
+                },
+                kPath.tag
             )
         }
 

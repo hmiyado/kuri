@@ -27,5 +27,22 @@ object KNodeSpek : Spek({
             }
             actual.toPaths() shouldBe expected
         }
+
+        it("特定のタグのパスを検索できる") {
+            val actual = with(KPath) {
+                "root" / {
+                    -"sub1"("tag1")
+                    -"sub2" / "sub2-1"
+                    -"sub3" / {
+                        -"sub3-1"
+                        -"sub3-2" / "sub3-2-1"("tag3-2-1")
+                    }
+                }
+            }
+
+            actual.findKPathByTag("tag1") shouldBe KPath.Factory.create("root/sub1")
+            actual.findKPathByTag("tag2") shouldBe null
+            actual.findKPathByTag("tag3-2-1") shouldBe KPath.Factory.create("root/sub3/sub3-2/sub3-2-1")
+        }
     }
 })
