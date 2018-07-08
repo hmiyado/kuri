@@ -1,6 +1,7 @@
 class KPath(
     private val segment: KSegment,
-    private val subPath: KPath? = null
+    private val subPath: KPath? = null,
+    private val tag: String = ""
 ) {
 
     operator fun div(other: KPath): KPath = KPath(
@@ -42,7 +43,8 @@ class KPath(
 
     internal class Builder(
         var string: String = "",
-        var subPath: KPath? = null
+        var subPath: KPath? = null,
+        var tag: String = ""
     ) {
         init {
             val splittedPaths = string.split("/")
@@ -57,7 +59,8 @@ class KPath(
     }
 
     object Factory {
-        fun create(string: String, subPath: KPath? = null): KPath = Builder(string, subPath).build()
+        fun create(string: String, subPath: KPath? = null, tag: String = ""): KPath =
+            Builder(string, subPath, tag).build()
 
         fun create(kPath: KPath, subPath: KPath? = null): KPath {
             return KPath(
@@ -77,6 +80,10 @@ class KPath(
 
         operator fun String.div(builder: KNode.Builder.() -> Unit): KNode {
             return KNode.Builder(Factory.create(this)).apply(builder).build()
+        }
+
+        operator fun String.invoke(tag: String): KPath {
+            return Factory.create(this, null, tag)
         }
     }
 }

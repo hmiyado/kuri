@@ -48,5 +48,12 @@ object KPathSpek : Spek({
             val path = "root/sub1/sub2/sub3"
             create(path).toString() shouldBe path
         }
+
+        it("パスにタグを指定できる") {
+            with(KPath) {
+                val path = create("root") / "sub1"("tag1")
+                path shouldBe create("root", create("sub1", null, "tag1"))
+            }
+        }
     }
 })
