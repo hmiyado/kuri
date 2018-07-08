@@ -8,7 +8,7 @@ import java.net.URI
 
 buildscript {
     var kotlin_version: String by extra
-    kotlin_version = "1.2.50"
+    kotlin_version = "1.2.51"
 
     repositories {
         mavenCentral()
